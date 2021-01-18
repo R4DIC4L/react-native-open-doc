@@ -74,20 +74,33 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
     return type;
   }
 
+  private Uri GetUriFromPath(String path) {
+    Uri uri = null;
+
+    if (path.startsWith("content://")) {
+      uri = Uri.parse(path);
+    } else {
+      if (path.startsWith("file://")) {
+        path = path.replace("file://", "");
+      }
+      File file = new File(path);
+      if (!file.exists()) {
+        Log.e(LOG_TAG, "File does not exist");
+        return null;
+      }
+      uri = FileProvider.getUriForFile(reactContext.getApplicationContext(),reactContext.getApplicationContext().getPackageName() + ".provider", file);
+    }
+
+    return uri;
+  }
+
   @ReactMethod
   public void open(String path, final Promise promise) {
-    if (path.startsWith("file://")) {
-      path = path.replace("file://", "");
-    }
-
-    File file = new File(path);
-    if (!file.exists()) {
-      Log.e(LOG_TAG, "File does not exist");
-      return;
-    }
-
     try {
-      Uri uri = FileProvider.getUriForFile(reactContext.getApplicationContext(),reactContext.getApplicationContext().getPackageName() + ".provider", file);
+      Uri uri = GetUriFromPath(path);
+      if (uri == null) {
+        return;
+      }
 
       String type = this.getMimeType(uri.toString());
 
@@ -120,18 +133,11 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
 
   @ReactMethod
   public void share(String path) {
-    if (path.startsWith("file://")) {
-      path = path.replace("file://", "");
-    }
-
-    File file = new File(path);
-    if (!file.exists()) {
-      Log.e(LOG_TAG, "File does not exist");
-      return;
-    }
-
     try {
-      Uri uri = FileProvider.getUriForFile(reactContext.getApplicationContext(),reactContext.getApplicationContext().getPackageName() + ".provider", file);
+      Uri uri = GetUriFromPath(path);
+      if (uri == null) {
+        return;
+      }
 
       String type = this.getMimeType(uri.toString());
 
