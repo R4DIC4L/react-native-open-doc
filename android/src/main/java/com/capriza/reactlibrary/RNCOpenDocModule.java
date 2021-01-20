@@ -33,6 +33,8 @@ import java.util.List;
 
 public class RNCOpenDocModule extends ReactContextBaseJavaModule implements ActivityEventListener {
   private static final String LOG_TAG = "RNCOpenDoc";
+  private static final String CONTENT_URI_TYPE_PREFIX = "content://";
+  private static final String FILE_PATH_TYPE_PREFIX = "file://";
   private static final int PICK_REQUEST_CODE = 1978;
 
   private static class Fields {
@@ -55,7 +57,7 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
     return "RNCOpenDoc";
   }
 
-  private String getMimeType(String filePath) {
+  private String getMimeTypeByFileExtensionFallbackToSuggestion(String filePath, String suggestedMimeType) {
     String ext = "";
     int nameEndIndex = filePath.lastIndexOf('.');
     if (nameEndIndex > 0) {
@@ -64,6 +66,13 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
     Log.d(LOG_TAG, ext);
     MimeTypeMap mime = MimeTypeMap.getSingleton();
     String type = mime.getMimeTypeFromExtension(ext.toLowerCase());
+
+    if (type == null) {
+      if (suggestedMimeType != null && !suggestedMimeType.isEmpty()) {
+        return suggestedMimeType;
+      }
+    }
+
     if (type == null) {
       type = HttpURLConnection.guessContentTypeFromName(filePath);
     }
@@ -74,14 +83,29 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
     return type;
   }
 
+  private boolean isContentUri(String path) {
+    return path != null && path.startsWith(CONTENT_URI_TYPE_PREFIX);
+  }
+
+  private boolean isFilePath(String path) {
+    return path != null && path.startsWith(FILE_PATH_TYPE_PREFIX);
+  }
+
+  private String getMimeType(String path, String suggestedMimeType) {
+    if (isContentUri(path) && suggestedMimeType != null && !suggestedMimeType.isEmpty()) {
+      return suggestedMimeType;
+    }
+    return getMimeTypeByFileExtensionFallbackToSuggestion(path, suggestedMimeType);
+  }
+
   private Uri GetUriFromPath(String path) {
     Uri uri = null;
 
-    if (path.startsWith("content://")) {
+    if (isContentUri(path)) {
       uri = Uri.parse(path);
     } else {
-      if (path.startsWith("file://")) {
-        path = path.replace("file://", "");
+      if (isFilePath(path)) {
+        path = path.replace(FILE_PATH_TYPE_PREFIX, "");
       }
       File file = new File(path);
       if (!file.exists()) {
@@ -95,14 +119,14 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
   }
 
   @ReactMethod
-  public void open(String path, final Promise promise) {
+  public void open(String path, String suggestedMimeType, final Promise promise) {
     try {
       Uri uri = GetUriFromPath(path);
       if (uri == null) {
         return;
       }
 
-      String type = this.getMimeType(uri.toString());
+      String type = this.getMimeType(uri.toString(), suggestedMimeType);
 
       Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
@@ -132,14 +156,14 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
   }
 
   @ReactMethod
-  public void share(String path) {
+  public void share(String path, String suggestedMimeType) {
     try {
       Uri uri = GetUriFromPath(path);
       if (uri == null) {
         return;
       }
 
-      String type = this.getMimeType(uri.toString());
+      String type = this.getMimeType(uri.toString(), String suggestedMimeType);
 
       Intent shareIntent = new Intent();
       shareIntent.setAction(Intent.ACTION_SEND);
