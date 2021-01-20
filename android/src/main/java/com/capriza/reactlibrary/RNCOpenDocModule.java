@@ -163,7 +163,7 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
         return;
       }
 
-      String type = this.getMimeType(uri.toString(), String suggestedMimeType);
+      String type = this.getMimeType(uri.toString(), suggestedMimeType);
 
       Intent shareIntent = new Intent();
       shareIntent.setAction(Intent.ACTION_SEND);
