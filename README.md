@@ -58,8 +58,21 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 ```javascript
 import RNCOpenDoc from 'react-native-open-doc';
 
+// For opening a document by path (android and iOS)
+// Works with file:// prefix or direct file path
 RNCOpenDoc.open(pathToFile);
+// For opening a content:// document (android ONLY)
+// Works with file:// prefix or direct file path OR content:// URI string with a suggested mime type for intent
+RNCOpenDoc.openWithSuggestedMime(contentUri, suggestedMimeType);
+
+// For sharing a document by path (android and iOS)
+// Works with file:// prefix or direct file path
 RNCOpenDoc.share(pathToFile);
+// For sharing a content:// document (android ONLY)
+// Works with file:// prefix or direct file path OR content:// URI string with a suggested mime type for intent
+RNCOpenDoc.shareWithSuggestedMime(pathToFile, suggestedMimeType);
+
+// For using the file picker (android and iOS)
 RNCOpenDoc.pick(null, (error, files) => {
     if (error) {
         console.log(`error in RNCOpenDoc.pick ${error}`);
