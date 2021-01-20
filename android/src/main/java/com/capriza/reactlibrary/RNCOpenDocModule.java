@@ -35,6 +35,7 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
   private static final String LOG_TAG = "RNCOpenDoc";
   private static final String CONTENT_URI_TYPE_PREFIX = "content://";
   private static final String FILE_PATH_TYPE_PREFIX = "file://";
+  private static final String NO_MIME_TYPE = "";
   private static final int PICK_REQUEST_CODE = 1978;
 
   private static class Fields {
@@ -120,6 +121,15 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
 
   @ReactMethod
   public void open(String path, String suggestedMimeType, final Promise promise) {
+    internalOpen(path, NO_MIME_TYPE, promise);
+  }
+
+  @ReactMethod
+  public void openWithSuggestedMime(String path, String suggestedMimeType, final Promise promise) {
+    internalOpen(path, suggestedMimeType, promise);
+  }
+
+  public void internalOpen(String path, String suggestedMimeType, final Promise promise) {
     try {
       Uri uri = GetUriFromPath(path);
       if (uri == null) {
@@ -157,6 +167,15 @@ public class RNCOpenDocModule extends ReactContextBaseJavaModule implements Acti
 
   @ReactMethod
   public void share(String path, String suggestedMimeType) {
+    internalShare(path, NO_MIME_TYPE);
+  }
+
+  @ReactMethod
+  public void shareWithSuggestedMime(String path, String suggestedMimeType) {
+    internalShare(path, suggestedMimeType);
+  }
+
+  public void internalShare(String path, String suggestedMimeType) {
     try {
       Uri uri = GetUriFromPath(path);
       if (uri == null) {
