@@ -22,7 +22,7 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 
   ```xml
   <provider
-      android:name="android.support.v4.content.FileProvider"
+      android:name="androidx.core.content.FileProvider"
       android:authorities="com.mydomain.provider"
       android:exported="false"
       android:grantUriPermissions="true">
