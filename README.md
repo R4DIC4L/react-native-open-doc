@@ -36,12 +36,12 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 
   ```xml
   <?xml version="1.0" encoding="utf-8"?>
-    <paths xmlns:android="http://schemas.android.com/apk/res/android">
-      <files-path name="shared" path="."/>
-      <external-path name="shared" path="."/>
-      <external-files-path name="shared" path="."/>
-      <root-path name="root" path="."/>
-    </paths>
+  <paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="shared" path="."/>
+    <external-path name="shared" path="."/>
+    <external-files-path name="shared" path="."/>
+    <root-path name="root" path="."/>
+  </paths>
   ```
 
 ### Manual installation
