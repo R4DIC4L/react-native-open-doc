@@ -5,7 +5,7 @@ Open files stored on device for preview - Android and iOS.
 
 Pick files using native file pickers for iOS and Android (UIDocumentPickerViewController / Intent.ACTION_OPEN_DOCUMENT)
 
-Share files on Android (for iOS use the react-native Share.share({ url: selectedUri }) api).
+Share files on Android (for iOS use the react-native Share.share({ url: selectedUri }) api, see https://reactnative.dev/docs/share#share for mre details).
 
 ## Getting started
 
@@ -15,19 +15,35 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 
 1. `$ react-native link react-native-open-doc`
 
-2. [Define a FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider)
+2. Android ONLY: [Define a FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider)
   
+  Define a file provider in your AndroidManifest.xml.
   Note that the authorities value should be `<your package name>.provider`, for example:
 
-  ```
+  ```xml
   <provider
-              android:name="android.support.v4.content.FileProvider"
-              android:authorities="com.mydomain.provider"
-              android:exported="false"
-              android:grantUriPermissions="true">
-              ...
+      android:name="android.support.v4.content.FileProvider"
+      android:authorities="com.mydomain.provider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provider_paths" />
   </provider>
   ```
+
+  In meta-data, all supported files should be listed. @xml/provider_paths takes values configured in xml/provider_paths.xml.
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+      <files-path name="shared" path="."/>
+      <external-path name="shared" path="."/>
+      <external-files-path name="shared" path="."/>
+      <root-path name="root" path="."/>
+    </paths>
+  ```
+
 ### Manual installation
 
 
@@ -59,17 +75,18 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 import RNCOpenDoc from 'react-native-open-doc';
 
 // For opening a document by path (android and iOS)
-// Works with file:// prefix or direct file path
+// Works with file:// prefix OR direct file path
 RNCOpenDoc.open(pathToFile);
 // For opening a content:// document (android ONLY)
-// Works with file:// prefix or direct file path OR content:// URI string with a suggested mime type for intent
+// Works with file:// prefix OR direct file path OR content:// URI string with a suggested mime type for intent
 RNCOpenDoc.openWithSuggestedMime(contentUri, suggestedMimeType);
 
-// For sharing a document by path (android and iOS)
-// Works with file:// prefix or direct file path
+// For sharing a document by path (android ONLY)
+// For iOS use the react-native Share.share({ url: selectedUri }) api (see https://reactnative.dev/docs/share#share)
+// Works with file:// prefix OR direct file path
 RNCOpenDoc.share(pathToFile);
 // For sharing a content:// document (android ONLY)
-// Works with file:// prefix or direct file path OR content:// URI string with a suggested mime type for intent
+// Works with file:// prefix OR direct file path OR content:// URI string with a suggested mime type for intent
 RNCOpenDoc.shareWithSuggestedMime(pathToFile, suggestedMimeType);
 
 // For using the file picker (android and iOS)
