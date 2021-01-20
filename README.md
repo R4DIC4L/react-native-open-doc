@@ -5,7 +5,7 @@ Open files stored on device for preview - Android and iOS.
 
 Pick files using native file pickers for iOS and Android (UIDocumentPickerViewController / Intent.ACTION_OPEN_DOCUMENT)
 
-Share files on Android (for iOS use the react-native Share.share({ url: selectedUri }) api, see https://reactnative.dev/docs/share#share for mre details).
+Share files on Android (for iOS use the react-native Share.share({ url: selectedUri }) api, see https://reactnative.dev/docs/share#share for more details).
 
 ## Getting started
 
