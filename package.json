@@ -18,6 +18,7 @@
     "picker",
     "share"
   ],
+  "homepage": "https://github.com/R4DIC4L/react-native-open-doc",
   "author": "R4DIC4L",
   "license": "MIT",
   "peerDependencies": {
