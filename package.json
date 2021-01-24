@@ -8,23 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/r4dic4l/react-native-open-doc.git"
+    "url": "git://https://github.com/r4dic4l/react-native-open-doc.git"
   },
   "keywords": [
     "react-native",
     "documents",
     "files",
     "viewer",
-    "picker",
-    "share"
+    "picker"
   ],
-  "homepage": "https://github.com/R4DIC4L/react-native-open-doc",
-  "author": "R4DIC4L",
+  "author": "r4dic4l",
   "license": "MIT",
   "peerDependencies": {
     "react-native": ">=0.50.0"
-  },
-  "bugs": {
-    "url": "https://github.com/r4dic4l/react-native-open-doc/issues"
   }
 }
