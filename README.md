@@ -1,5 +1,7 @@
 
-# react-native-open-doc
+# react-native-open-document
+
+This is a fork of [react-native-open-doc](https://github.com/capriza/react-native-open-doc).
 
 Open files stored on device for preview - Android and iOS. 
 
@@ -9,13 +11,14 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 
 ## Getting started
 
-`$ npm install react-native-open-doc --save`
+`$ npm install react-native-open-document --save`
 
 ### Mostly automatic installation
 
-1. `$ react-native link react-native-open-doc`
+`$ react-native link react-native-open-document`
 
-2. Android ONLY: [Define a FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider)
+Android ONLY:
+  [Define a FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider)
   
   Define a file provider in your AndroidManifest.xml.
   Note that the authorities value should be `<your package name>.provider`, for example:
