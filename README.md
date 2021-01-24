@@ -1,5 +1,5 @@
 
-# react-native-open-document
+# @r4dic4l/react-native-open-doc
 
 This is a fork of [react-native-open-doc](https://github.com/capriza/react-native-open-doc).
 
@@ -11,11 +11,11 @@ Share files on Android (for iOS use the react-native Share.share({ url: selected
 
 ## Getting started
 
-`$ npm install react-native-open-document --save`
+`$ npm install @r4dic4l/react-native-open-doc --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-open-document`
+`$ react-native link @r4dic4l/react-native-open-doc`
 
 Android ONLY:
   [Define a FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider)
@@ -75,7 +75,7 @@ Android ONLY:
 
 ## Usage
 ```javascript
-import RNCOpenDoc from 'react-native-open-doc';
+import RNCOpenDoc from '@r4dic4l/react-native-open-doc';
 
 // For opening a document by path (android and iOS)
 // Works with file:// prefix OR direct file path

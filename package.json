@@ -1,5 +1,5 @@
 {
-  "name": "react-native-open-doc",
+  "name": "@r4dic4l/react-native-open-doc",
   "version": "2.1.5",
   "description": "React Native module for opening documents",
   "main": "index.js",
@@ -23,5 +23,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react-native": ">=0.50.0"
+  },
+  "bugs": {
+    "url": "https://github.com/r4dic4l/react-native-open-doc/issues"
   }
 }
