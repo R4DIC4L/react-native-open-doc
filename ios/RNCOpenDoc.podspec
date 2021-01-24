@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author             = { "author" => "guy.blank@capriza.com" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/r4dic4l/react-native-open-doc.git", :tag => "master" }
-  s.source_files  = "RNCOpenDoc/**/*.{h,m}"
+  s.source_files  = "*.{h,m}"
   s.requires_arc = true
 
 
