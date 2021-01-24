@@ -1,7 +1,7 @@
 {
   "name": "react-native-open-doc",
   "version": "2.1.5",
-  "description": "React Native module for openning documents",
+  "description": "React Native module for opening documents",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
